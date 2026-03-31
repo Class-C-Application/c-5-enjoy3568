@@ -1,0 +1,148 @@
+name: GitHub Classroom Workflow - Week08
+on:
+  push:
+    paths:
+      - 'chapter08/**'
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  build:
+    name: Autograding Week08
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: week08-01-decarray
+        id: week08-01-decarray
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: week08-01-decarray
+          setup-command: gcc chapter08/01decarray.c -o w801
+          command: ./w801
+          input: ""
+          expected-output: "91"
+          comparison-method: contains
+          timeout: 10
+          max-score: 10
+
+      - name: week08-02-initarray
+        id: week08-02-initarray
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: week08-02-initarray
+          setup-command: gcc chapter08/02initarray.c -o w802
+          command: ./w802
+          input: ""
+          expected-output: "성적의 합은"
+          comparison-method: contains
+          timeout: 10
+          max-score: 10
+
+      - name: week08-03-tdarray
+        id: week08-03-tdarray
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: week08-03-tdarray
+          setup-command: gcc chapter08/03tdarray.c -o w803
+          command: ./w803
+          input: ""
+          expected-output: "td[1][2] == 6"
+          comparison-method: contains
+          timeout: 10
+          max-score: 10
+
+      - name: week08-04-inittdary
+        id: week08-04-inittdary
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: week08-04-inittdary
+          setup-command: gcc chapter08/04inittdary.c -o w804
+          command: ./w804
+          input: ""
+          expected-output: "1 2 3"
+          comparison-method: contains
+          timeout: 10
+          max-score: 10
+
+      - name: week08-05-tdscore
+        id: week08-05-tdscore
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: week08-05-tdscore
+          setup-command: gcc chapter08/05tdscore.c -o w805
+          command: ./w805
+          input: ""
+          expected-output: "평균은 87.50이다."
+          comparison-method: contains
+          timeout: 10
+          max-score: 10
+
+      - name: week08-06-thdary
+        id: week08-06-thdary
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: week08-06-thdary
+          setup-command: gcc chapter08/06thdary.c -o w806
+          command: ./w806
+          input: ""
+          expected-output: "[강좌 2]"
+          comparison-method: contains
+          timeout: 10
+          max-score: 10
+
+      - name: week08-07-arysize
+        id: week08-07-arysize
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: week08-07-arysize
+          setup-command: gcc chapter08/07arysize.c -o w807
+          command: ./w807
+          input: ""
+          expected-output: "배열 data 크기 == 5"
+          comparison-method: contains
+          timeout: 10
+          max-score: 10
+
+      - name: week08-lab1-inputarray
+        id: week08-lab1-inputarray
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: week08-lab1-inputarray
+          setup-command: gcc chapter08/lab1inputarray.c -o w8lab1
+          command: ./w8lab1
+          input: "0"
+          expected-output: "0을 입력하면 입력을 종료합니다."
+          comparison-method: contains
+          timeout: 10
+          max-score: 10
+
+      - name: week08-lab2-aryprint
+        id: week08-lab2-aryprint
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: week08-lab2-aryprint
+          setup-command: gcc chapter08/lab2aryprint.c -o w8lab2
+          command: ./w8lab2
+          input: ""
+          expected-output: "a[2][3] 8"
+          comparison-method: contains
+          timeout: 10
+          max-score: 10
+
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        continue-on-error: true
+        env:
+          WEEK08-01-DECARRAY_RESULTS: "${{steps.week08-01-decarray.outputs.result}}"
+          WEEK08-02-INITARRAY_RESULTS: "${{steps.week08-02-initarray.outputs.result}}"
+          WEEK08-03-TDARRAY_RESULTS: "${{steps.week08-03-tdarray.outputs.result}}"
+          WEEK08-04-INITTDARY_RESULTS: "${{steps.week08-04-inittdary.outputs.result}}"
+          WEEK08-05-TDSCORE_RESULTS: "${{steps.week08-05-tdscore.outputs.result}}"
+          WEEK08-06-THDARY_RESULTS: "${{steps.week08-06-thdary.outputs.result}}"
+          WEEK08-07-ARYSIZE_RESULTS: "${{steps.week08-07-arysize.outputs.result}}"
+          WEEK08-LAB1-INPUTARRAY_RESULTS: "${{steps.week08-lab1-inputarray.outputs.result}}"
+          WEEK08-LAB2-ARYPRINT_RESULTS: "${{steps.week08-lab2-aryprint.outputs.result}}"
+        with:
+          runners: week08-01-decarray,week08-02-initarray,week08-03-tdarray,week08-04-inittdary,week08-05-tdscore,week08-06-thdary,week08-07-arysize,week08-lab1-inputarray,week08-lab2-aryprint
